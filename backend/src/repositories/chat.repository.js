@@ -1,3 +1,5 @@
+const openai = require("../config/openai");
+
 const ChatRepository = {
     send: async (memory) => {
         const response = { status: 200, response: '', error: false };
@@ -31,4 +33,6 @@ const ChatRepository = {
 
         return response;
     },
-}
+};
+
+module.exports = ChatRepository;
