@@ -1,7 +1,11 @@
+import { GlobalStyles } from "./utils/globalStyles"
+import Home from "./pages/home";
+
 const App = () => {
   return (
     <>
-      Olá, mundo!
+      <GlobalStyles />
+      <Home />
     </>
   )
 }
