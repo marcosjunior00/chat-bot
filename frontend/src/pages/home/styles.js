@@ -4,17 +4,6 @@ export const UserForm = styled.form`
     display: flex;
     flex-direction: column;
     gap: 20px
-
-    /* label {
-        margin-bottom: 10px;
-    }
-
-    input {
-        margin-bottom: 20px;
-        padding: 10px;
-        border-radius: 4px;
-        border: 1px solid #ccc;
-    } */
 `;
 
 export const SubmitButton = styled.button`
@@ -45,5 +34,11 @@ export const UserData = styled.div`
     top: 18px;
     left: 18px;
     display: flex;
-    gap: 4px;
+    align-items: center;
+    gap: 8px;
+`;
+
+export const UserName = styled.h4`
+    color: #fff;
+    font-weight: 300;
 `;

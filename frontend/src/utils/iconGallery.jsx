@@ -5,6 +5,4 @@ const iconGallery = {
     robot: (color, size, onClick) => <FaRobot fill={color} size={size} onClick={onClick} />,
 };
 
-const renderIcon = ({ name, color, size, onClick }) => iconGallery[name](color, size, onClick);
-
-export default renderIcon;
+export const renderIcon = ({ name, color, size, onClick }) => iconGallery[name](color, size, onClick);
