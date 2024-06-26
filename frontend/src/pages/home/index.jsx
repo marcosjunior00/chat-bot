@@ -7,15 +7,27 @@ import * as S from '../home/styles';
 
 const Home = () => {
     const { register, handleSubmit, reset } = useForm();
-    const [dialogIsOpen, setDialogIsOpen] = useState(true);
+    const [dialogIsOpen, setDialogIsOpen] = useState(false);
     const [userName, setUserName] = useState("");
+
+    const handleOpenDialog = () => {
+        setDialogIsOpen(true);
+        setUserName("");
+    };
 
     const onSubmit = (data) => {
         console.log({ data });
         setUserName(data.name);
+        localStorage.setItem("userName", data.name);
         setDialogIsOpen(false);
         reset();
     };
+
+    useEffect(() => {
+        const name = localStorage.getItem("userName");
+        if (!name || name.trim() === "") handleOpenDialog();
+        else setUserName(name);
+    }, [])
 
     return (
         <>
