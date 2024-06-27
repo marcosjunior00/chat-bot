@@ -11,7 +11,16 @@ const Home = () => {
     const { register, handleSubmit, reset } = useForm();
     const [dialogIsOpen, setDialogIsOpen] = useState(false);
     const [userName, setUserName] = useState("");
-    const [messages, setMessages] = useState([]);
+    const [messages, setMessages] = useState([
+        {
+            role: "user",
+            content: "Olá, como vai?"
+        },
+        {
+            role: "assistant",
+            content: "Olá, tudo ótimo, obrigado por perguntar! Como posso te ajudar hoje?"
+        }
+    ]);
 
     const handleOpenDialog = () => {
         setDialogIsOpen(true);
