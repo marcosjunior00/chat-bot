@@ -31,11 +31,14 @@ const Home = () => {
             setMessages(data.data || []);
 
             if (!data.data || data.data.length === 0) {
-                setMessages([{ role: "assistant", content: "Olá, como posso te ajudar hoje?" }]);
+                const message = { role: "assistant", content: "Olá, como posso te ajudar hoje?" };
+                setMessages([message]);
+
+                await axios.post(`${import.meta.env.VITE_API_URL}/api/memory`, { name: userName || name, message });
             }
         } catch (error) {
             console.error(error);
-            console.error("Ocorreu um erro ao buscar as mensagens do histórico.")
+            console.error("Ocorreu um erro ao buscar as mensagens do histórico.");
         }
     };
 

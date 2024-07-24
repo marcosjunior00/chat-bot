@@ -52,6 +52,17 @@ const ChatRepository = {
         if (!messages || messages.length === 0) ChatRepository.MEMORY.set(name, []);
         return messages || [];
     },
+    insertMessage: async (name, message) => {
+        try {
+            let history = await ChatRepository.MEMORY.get(name);
+            if (!history) history = [];
+            history.push(message);
+
+            ChatRepository.MEMORY.set(name, history);
+        } catch (err) {
+            console.error(err);
+        }
+    },
 };
 
 module.exports = ChatRepository;
