@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import Dialog from '../../components/Dialog';
 import Input from '../../components/Input';
@@ -22,6 +23,22 @@ const Home = () => {
         }
     ]);
 
+    const fetchMessages = async name => {
+        try {
+            // console.log(import.meta.env.VITE_API_URL)
+            const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/api/memory/${userName || name}`);
+            console.log({ data });
+            setMessages(data.data || []);
+
+            if (!data.data || data.data.length === 0) {
+                setMessages([{ role: "assistant", content: "Olá, como posso te ajudar hoje?" }]);
+            }
+        } catch (error) {
+            console.error(error);
+            console.error("Ocorreu um erro ao buscar as mensagens do histórico.")
+        }
+    };
+
     const handleOpenDialog = () => {
         setDialogIsOpen(true);
         setUserName("");
@@ -36,9 +53,11 @@ const Home = () => {
 
     useEffect(() => {
         const name = localStorage.getItem("userName");
-        if (!name || name.trim() === "") handleOpenDialog();
+        if (!name || name.trim() === "") return handleOpenDialog();
         else setUserName(name);
-    }, [])
+
+        fetchMessages(name);
+    }, [userName])
 
     return (
         <>
