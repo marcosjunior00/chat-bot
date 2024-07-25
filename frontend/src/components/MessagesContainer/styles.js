@@ -6,6 +6,8 @@ export const Container = styled.div`
     flex-direction: column;
     gap: 16px;
     padding: 2px 12px;
+    width: 100%;
+    overflow-y: auto;
 `;
 
 export const MessageBox = styled.div`

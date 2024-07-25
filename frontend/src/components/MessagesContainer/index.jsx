@@ -1,9 +1,16 @@
 import PropTypes from 'prop-types';
 import * as S from "./styles";
+import { useEffect, useRef } from 'react';
 
 const MessagesContainer = ({ messages }) => {
+  const containerRef = useRef(null);
+
+  useEffect(() => {
+    containerRef.current.scrollTop = containerRef.current.scrollHeight;
+  }, [messages]);
+
   return (
-    <S.Container>
+    <S.Container ref={containerRef}>
       {messages?.length > 0 && messages.map((message, index) => (
         <S.MessageBox key={index + 1} $botMessage={message.role === "assistant"}>
           <S.RecipientName>{message.role === "user" ? "Você" : "Bot"}</S.RecipientName>
