@@ -13,7 +13,7 @@ export const DialogWrapper = styled.div`
 `;
 
 export const DialogContent = styled.div`
-    background: rgba(255, 255, 255, 0.8);
+    background: rgba(255, 255, 255, 0.6);
     border-radius: 8px;
     width: 500px;
     max-width: 100%;
