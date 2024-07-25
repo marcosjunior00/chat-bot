@@ -53,6 +53,7 @@ export const ChatContainer = styled.div`
     gap: 1rem;
     height: 70%;
     min-width: 350px;
+    width: 70%;
 `;
 
 export const ChatHeader = styled.div`

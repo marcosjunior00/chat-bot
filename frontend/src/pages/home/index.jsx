@@ -12,22 +12,12 @@ const Home = () => {
     const { register, handleSubmit, reset } = useForm();
     const [dialogIsOpen, setDialogIsOpen] = useState(false);
     const [userName, setUserName] = useState("");
-    const [messages, setMessages] = useState([
-        {
-            role: "user",
-            content: "Olá, como vai?"
-        },
-        {
-            role: "assistant",
-            content: "Olá, tudo ótimo, obrigado por perguntar! Como posso te ajudar hoje?"
-        }
-    ]);
+    const [messages, setMessages] = useState([]);
 
+    // API REQUESTS --------------------------
     const fetchMessages = async name => {
         try {
-            // console.log(import.meta.env.VITE_API_URL)
             const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/api/memory/${userName || name}`);
-            console.log({ data });
             setMessages(data.data || []);
 
             if (!data.data || data.data.length === 0) {
@@ -42,6 +32,36 @@ const Home = () => {
         }
     };
 
+    const onSubmit = async data => {
+        const payload = {
+            user: userName || name,
+            message: data.message,
+        };
+
+        setMessages(prev => [...prev, { role: 'user', content: data.message }]);
+
+        try {
+            const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/send`, payload);
+            console.log({ data: response.data });
+            if (response.data.response) {
+                setMessages(prev => [...prev, { role: 'assistant', content: response.data.response }]);
+            }
+        } catch (err) {
+            console.error(err);
+        }
+    };
+
+    const handleClearChat = async () => {
+        try {
+            await axios.delete(`${import.meta.env.VITE_API_URL}/api/memory/clear/${userName}`);
+            setMessages([]);
+            fetchMessages(userName);
+        } catch (err) {
+            console.error(err);
+        }
+    };
+
+    // SET USER NAME -------------------------
     const handleOpenDialog = () => {
         setDialogIsOpen(true);
         setUserName("");
@@ -75,7 +95,7 @@ const Home = () => {
                         <S.ChatHeader>
                             <S.ChatName>ChatBot</S.ChatName>
 
-                            <S.ClearChatButton>
+                            <S.ClearChatButton onClick={handleClearChat}>
                                 {renderIcon({ name: "broom", color: "#fff", size: 14 })}
                             </S.ClearChatButton>
                         </S.ChatHeader>
@@ -83,7 +103,7 @@ const Home = () => {
                         <MessagesContainer messages={messages} />
 
                         <S.SendMessageContainer>
-                            <SendMessageInput />
+                            <SendMessageInput onSubmit={onSubmit} />
                         </S.SendMessageContainer>
                     </S.ChatContainer>
                 </S.Container>
