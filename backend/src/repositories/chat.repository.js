@@ -63,6 +63,9 @@ const ChatRepository = {
             console.error(err);
         }
     },
+    clearChatHistory: async (name) => {
+        ChatRepository.MEMORY.set(name, []);
+    },
 };
 
 module.exports = ChatRepository;
